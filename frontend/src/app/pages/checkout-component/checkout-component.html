@@ -1,0 +1,72 @@
+<div class="page">
+  <header class="site-header">
+    <div class="header-inner">
+      <button class="back-btn" (click)="router.navigate(['/'])">← Back to Shop</button>
+      <h1 class="logo">Checkout</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="empty" *ngIf="cartService.items().length === 0">
+      <p>Your cart is empty.</p>
+      <button class="btn-primary" (click)="router.navigate(['/'])">Shop Now</button>
+    </div>
+
+    <div class="checkout-layout" *ngIf="cartService.items().length > 0">
+
+      <section class="card">
+        <h2>Order Summary</h2>
+        <div class="line-item" *ngFor="let item of cartService.items()">
+          <div class="item-name">
+            <strong>{{ item.product.name }}</strong>
+            <div class="qty-control">
+              <button (click)="cartService.updateQuantity(item.product.id, item.quantity - 1)">−</button>
+              <span>{{ item.quantity }}</span>
+              <button (click)="cartService.updateQuantity(item.product.id, item.quantity + 1)">+</button>
+            </div>
+          </div>
+          <div class="item-price">
+            ALL {{ item.product.price * item.quantity }}
+            <button class="remove-btn" (click)="cartService.removeFromCart(item.product.id)">✕</button>
+          </div>
+        </div>
+        <div class="total-row">
+          <span>Total</span>
+          <strong>ALL {{ cartService.total() }}</strong>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Payment Options</h2>
+
+        <div class="toggle-field">
+          <label class="toggle-label">
+            <div class="toggle-text">
+              <strong>Auto-Capture</strong>
+              <span>ON = payment captured immediately. OFF = you manually capture it from the dashboard.</span>
+            </div>
+            <div class="toggle-switch">
+              <input type="checkbox" [(ngModel)]="autoCapture" id="autoCapture" />
+              <label for="autoCapture" class="slider"></label>
+            </div>
+          </label>
+          <div class="badge" [class.badge-on]="autoCapture" [class.badge-off]="!autoCapture">
+            {{ autoCapture ? 'Auto-Capture ON' : 'Auto-Capture OFF — manual capture required' }}
+          </div>
+        </div>
+
+        <div class="error-box" *ngIf="error()">{{ error() }}</div>
+
+        <button class="btn-primary btn-pay" [disabled]="loading()" (click)="placeOrder()">
+          <span *ngIf="!loading()">Place Order & Pay</span>
+          <span *ngIf="loading()">Creating order…</span>
+        </button>
+
+        <p class="test-card-info">
+          🧪 Test card: <code>4000 0000 0000 1091</code> · CVV: any 3 digits · Exp: any date after 12/25 · 3DS: <code>1234</code>
+        </p>
+      </section>
+
+    </div>
+  </main>
+</div>

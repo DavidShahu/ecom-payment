@@ -1,0 +1,85 @@
+<div class="page">
+  <header class="site-header">
+    <div class="header-inner">
+      <button class="back-btn" (click)="router.navigate(['/'])">← Shop</button>
+      <h1 class="logo">🏪 Merchant Dashboard</h1>
+      <button class="back-btn" (click)="loadOrders()">↻ Refresh</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="loading" *ngIf="loading()">Loading orders…</div>
+    <div class="error-box" *ngIf="error()">{{ error() }}</div>
+
+    <div class="no-orders" *ngIf="!loading() && orders().length === 0">
+      No orders yet.
+      <span class="link" (click)="router.navigate(['/'])">Start shopping →</span>
+    </div>
+
+    <div class="orders-grid" *ngIf="orders().length > 0">
+      <div class="order-card" *ngFor="let order of orders()">
+
+        <div class="card-header">
+          <span class="pill" [ngClass]="'status-' + order.status">{{ order.status }}</span>
+          <span class="order-amount">ALL {{ order.amount }}</span>
+        </div>
+
+        <p class="order-id">ID: <code>{{ order.id }}</code></p>
+        <p class="order-meta-line">
+          {{ order.items.length }} item(s) ·
+          <span [class.text-green]="order.autoCapture" [class.text-orange]="!order.autoCapture">
+            Auto-Capture {{ order.autoCapture ? 'ON' : 'OFF' }}
+          </span>
+        </p>
+        <p class="order-date">{{ order.createdAt | date:'short' }}</p>
+
+        <div class="card-actions">
+
+          <!-- View -->
+          <button class="btn-sm btn-ghost"
+            (click)="router.navigate(['/orders', order.id])">
+            View
+          </button>
+
+          <!-- Capture: only for AUTHORIZED orders with autoCapture OFF -->
+          <button class="btn-sm btn-capture"
+            *ngIf="order.status === 'AUTHORIZED' && !order.autoCapture"
+            [disabled]="actionLoading() === order.id"
+            (click)="capture(order.id)">
+            {{ actionLoading() === order.id ? '…' : 'Capture' }}
+          </button>
+
+          <!-- Cancel: only for PENDING or AUTHORIZED -->
+          <button class="btn-sm btn-cancel"
+            *ngIf="order.status === 'PENDING' || order.status === 'AUTHORIZED'"
+            [disabled]="actionLoading() === order.id"
+            (click)="cancel(order.id)">
+            {{ actionLoading() === order.id ? '…' : 'Cancel' }}
+          </button>
+
+          <!-- Refund: only for CAPTURED orders -->
+          <ng-container *ngIf="order.status === 'CAPTURED' || order.status === 'PARTIALLY_REFUNDED'">
+            <input
+              type="number"
+              class="refund-input"
+              [(ngModel)]="refundAmounts[order.id]"
+              [placeholder]="'Max ' + order.amount"
+              min="0.01"
+              [max]="order.amount"
+            />
+            <button class="btn-sm btn-refund"
+              [disabled]="actionLoading() === order.id"
+              (click)="refund(order.id, refundAmounts[order.id])">
+              {{ actionLoading() === order.id ? '…' : (refundAmounts[order.id] ? 'Partial Refund' : 'Full Refund') }}
+            </button>
+          </ng-container>
+
+        </div>
+
+        <div class="action-success" *ngIf="actionSuccess() === order.id">✓ Done!</div>
+        <div class="action-error" *ngIf="actionError[order.id]">{{ actionError[order.id] }}</div>
+
+      </div>
+    </div>
+  </main>
+</div>

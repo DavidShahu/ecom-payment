@@ -1,0 +1,47 @@
+.page { min-height: 100vh; background: #f8f9fa; }
+.site-header { background: #1a1a2e; color: white; padding: 1rem 0; }
+.header-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; }
+.back-btn { background: transparent; color: white;
+  border: 1px solid rgba(255,255,255,.4); padding: .4rem .9rem;
+  border-radius: 6px; cursor: pointer; font-size: .85rem; }
+.logo { margin: 0; font-size: 1.2rem; }
+.container { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+.loading, .no-orders { text-align: center; padding: 3rem; color: #666; }
+.link { color: #e94560; cursor: pointer; }
+.error-box { background: #fef2f2; color: #dc2626; border-radius: 8px;
+  padding: 1rem; margin-bottom: 1rem; }
+.orders-grid { display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+.order-card { background: white; border-radius: 12px; padding: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.card-header { display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: .6rem; }
+.order-amount { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; }
+.order-id { font-size: .8rem; color: #888; margin: .3rem 0; }
+code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; }
+.order-meta-line { font-size: .85rem; color: #555; margin: .25rem 0; }
+.order-date { font-size: .8rem; color: #aaa; margin: .25rem 0 .8rem; }
+.card-actions { display: flex; flex-wrap: wrap; gap: .5rem;
+  margin-top: .5rem; align-items: center; }
+.btn-sm { padding: .35rem .8rem; border: none; border-radius: 6px;
+  cursor: pointer; font-size: .82rem; font-weight: 600; }
+.btn-sm:disabled { opacity: .5; cursor: not-allowed; }
+.btn-ghost { background: #f1f5f9; color: #475569; }
+.btn-capture { background: #dcfce7; color: #15803d; }
+.btn-cancel { background: #fee2e2; color: #dc2626; }
+.btn-refund { background: #f3e8ff; color: #7c3aed; }
+.refund-input { width: 90px; border: 1px solid #ddd; border-radius: 6px;
+  padding: .3rem .5rem; font-size: .82rem; }
+.pill { padding: .25rem .7rem; border-radius: 20px; font-size: .75rem; font-weight: 600; }
+.status-PENDING { background: #fef9c3; color: #a16207; }
+.status-AUTHORIZED { background: #dbeafe; color: #1d4ed8; }
+.status-CAPTURED { background: #dcfce7; color: #15803d; }
+.status-CANCELLED { background: #f1f5f9; color: #475569; }
+.status-FAILED { background: #fee2e2; color: #b91c1c; }
+.status-REFUNDED { background: #f3e8ff; color: #7c3aed; }
+.status-PARTIALLY_REFUNDED { background: #fce7f3; color: #be185d; }
+.text-green { color: #16a34a; }
+.text-orange { color: #c2410c; }
+.action-success { color: #16a34a; font-size: .85rem; margin-top: .4rem; }
+.action-error { color: #dc2626; font-size: .85rem; margin-top: .4rem; }

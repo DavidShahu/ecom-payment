@@ -1,0 +1,52 @@
+.page { min-height: 100vh; background: #f8f9fa; }
+.site-header { background: #1a1a2e; color: white; padding: 1rem 0; }
+.header-inner { max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+  display: flex; align-items: center; gap: 1.5rem; }
+.back-btn { background: transparent; color: white;
+  border: 1px solid rgba(255,255,255,.4); padding: .4rem .9rem;
+  border-radius: 6px; cursor: pointer; font-size: .9rem; }
+.logo { margin: 0; font-size: 1.3rem; }
+.container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
+.empty { text-align: center; padding: 4rem; }
+.checkout-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.card { background: white; border-radius: 12px; padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.card h2 { margin: 0 0 1.2rem; font-size: 1.1rem; color: #1a1a2e; }
+.line-item { display: flex; justify-content: space-between; align-items: center;
+  padding: .7rem 0; border-bottom: 1px solid #f0f0f0; }
+.item-name { display: flex; flex-direction: column; gap: .3rem; }
+.qty-control { display: flex; align-items: center; gap: .5rem; }
+.qty-control button { background: #f0f0f0; border: none; width: 24px; height: 24px;
+  border-radius: 4px; cursor: pointer; }
+.item-price { display: flex; align-items: center; gap: .8rem; font-weight: 600; }
+.remove-btn { background: transparent; border: none; color: #ccc; cursor: pointer; }
+.remove-btn:hover { color: #e94560; }
+.total-row { display: flex; justify-content: space-between;
+  padding-top: 1rem; font-size: 1.1rem; }
+.toggle-field { margin-bottom: 1.2rem; }
+.toggle-label { display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 1rem; cursor: pointer; }
+.toggle-text { display: flex; flex-direction: column; gap: .3rem; }
+.toggle-text span { font-size: .83rem; color: #666; }
+.toggle-switch { position: relative; width: 46px; height: 24px; flex-shrink: 0; }
+.toggle-switch input { display: none; }
+.slider { position: absolute; inset: 0; background: #ccc;
+  border-radius: 24px; cursor: pointer; transition: background .3s; }
+.slider::before { content: ''; position: absolute; width: 18px; height: 18px;
+  left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform .3s; }
+input:checked + .slider { background: #16a34a; }
+input:checked + .slider::before { transform: translateX(22px); }
+.badge { display: inline-block; margin-top: .5rem; padding: .3rem .8rem;
+  border-radius: 20px; font-size: .8rem; font-weight: 600; }
+.badge-on { background: #dcfce7; color: #16a34a; }
+.badge-off { background: #fff7ed; color: #c2410c; }
+.error-box { background: #fef2f2; color: #dc2626; border-radius: 8px;
+  padding: .8rem 1rem; margin-bottom: 1rem; font-size: .9rem; }
+.btn-primary { background: #e94560; color: white; border: none;
+  padding: .75rem 1.5rem; border-radius: 8px; cursor: pointer;
+  font-size: 1rem; font-weight: 600; }
+.btn-primary:disabled { opacity: .6; cursor: not-allowed; }
+.btn-pay { width: 100%; margin-top: 1rem; }
+.test-card-info { margin-top: 1rem; font-size: .8rem; color: #888;
+  background: #f8f9fa; padding: .7rem 1rem; border-radius: 8px; }
+code { background: #e2e8f0; padding: 1px 5px; border-radius: 3px; }

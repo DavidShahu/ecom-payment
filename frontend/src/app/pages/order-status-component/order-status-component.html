@@ -1,0 +1,55 @@
+<div class="page">
+  <header class="site-header">
+    <div class="header-inner">
+      <button class="back-btn" (click)="router.navigate(['/'])">← Continue Shopping</button>
+      <h1 class="logo">Order Status</h1>
+      <button class="back-btn" (click)="router.navigate(['/dashboard'])">Dashboard →</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="loading" *ngIf="loading()">Loading order…</div>
+    <div class="error-box" *ngIf="error()">{{ error() }}</div>
+
+    <div class="status-card" *ngIf="order()">
+      <div class="status-icon">{{ statusIcon(order()!.status) }}</div>
+      <h2>{{ statusTitle(order()!.status) }}</h2>
+      <p class="status-subtitle">{{ statusDescription(order()!.status) }}</p>
+
+      <div class="order-meta">
+        <div class="meta-row">
+          <span>Order ID</span>
+          <code>{{ order()!.id }}</code>
+        </div>
+        <div class="meta-row">
+          <span>Amount</span>
+          <strong>ALL {{ order()!.amount }}</strong>
+        </div>
+        <div class="meta-row">
+          <span>Auto-Capture</span>
+          <span class="pill" [class.pill-green]="order()!.autoCapture" [class.pill-orange]="!order()!.autoCapture">
+            {{ order()!.autoCapture ? 'On' : 'Off' }}
+          </span>
+        </div>
+        <div class="meta-row">
+          <span>Status</span>
+          <span class="pill pill-status">{{ order()!.status }}</span>
+        </div>
+        <div class="meta-row">
+          <span>Created</span>
+          <span>{{ order()!.createdAt | date:'medium' }}</span>
+        </div>
+      </div>
+
+      <div class="items-list">
+        <h3>Items</h3>
+        <div class="item-row" *ngFor="let item of order()!.items">
+          <span>{{ item.name }} × {{ item.quantity }}</span>
+          <span>ALL {{ item.price * item.quantity }}</span>
+        </div>
+      </div>
+
+      <button class="btn-refresh" (click)="loadOrder()">↻ Refresh Status</button>
+    </div>
+  </main>
+</div>

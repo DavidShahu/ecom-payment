@@ -1,0 +1,32 @@
+.page { min-height: 100vh; background: #f8f9fa; }
+.site-header { background: #1a1a2e; color: white; padding: 1rem 0; }
+.header-inner { max-width: 700px; margin: 0 auto; padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; }
+.back-btn { background: transparent; color: white;
+  border: 1px solid rgba(255,255,255,.4); padding: .4rem .9rem;
+  border-radius: 6px; cursor: pointer; font-size: .85rem; }
+.logo { margin: 0; font-size: 1.2rem; }
+.container { max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; }
+.loading { text-align: center; padding: 3rem; color: #666; }
+.error-box { background: #fef2f2; color: #dc2626; border-radius: 8px; padding: 1rem; }
+.status-card { background: white; border-radius: 16px; padding: 2rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.1); text-align: center; }
+.status-icon { font-size: 4rem; margin-bottom: 1rem; }
+.status-card h2 { margin: 0 0 .5rem; font-size: 1.5rem; color: #1a1a2e; }
+.status-subtitle { color: #666; margin-bottom: 1.5rem; }
+.order-meta { background: #f8f9fa; border-radius: 10px; padding: 1rem;
+  text-align: left; margin-bottom: 1.5rem; }
+.meta-row { display: flex; justify-content: space-between; padding: .5rem 0;
+  border-bottom: 1px solid #eee; font-size: .9rem; }
+.meta-row:last-child { border-bottom: none; }
+.items-list { text-align: left; margin-bottom: 1.5rem; }
+.items-list h3 { font-size: 1rem; margin-bottom: .7rem; }
+.item-row { display: flex; justify-content: space-between; padding: .4rem 0;
+  border-bottom: 1px solid #f0f0f0; font-size: .9rem; }
+code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: .8rem; }
+.pill { padding: .25rem .7rem; border-radius: 20px; font-size: .8rem; font-weight: 600; }
+.pill-green { background: #dcfce7; color: #16a34a; }
+.pill-orange { background: #fff7ed; color: #c2410c; }
+.pill-status { background: #dbeafe; color: #1d4ed8; }
+.btn-refresh { background: #1a1a2e; color: white; border: none;
+  padding: .6rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: .9rem; }

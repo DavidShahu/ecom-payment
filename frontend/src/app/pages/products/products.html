@@ -1,0 +1,39 @@
+ <div class="page">
+      <header class="site-header">
+        <div class="header-inner">
+          <h1 class="logo">🛒 POK Shop</h1>
+          <button class="cart-btn" (click)="goToCheckout()">
+            Cart
+            <span class="badge" *ngIf="cartService.count() > 0">
+              {{ cartService.count() }}
+            </span>
+          </button>
+        </div>
+      </header>
+
+      <main class="container">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="product-grid">
+          <div class="product-card" *ngFor="let product of products">
+            <div class="product-img">{{ product.emoji }}</div>
+            <div class="product-info">
+              <h3>{{ product.name }}</h3>
+              <p class="description">{{ product.description }}</p>
+              <div class="product-footer">
+                <span class="price">ALL {{ product.price }}</span>
+                <button class="btn-add" (click)="addToCart(product)">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <div class="cart-bar" *ngIf="cartService.count() > 0">
+        <span>{{ cartService.count() }} item(s) — ALL {{ cartService.total() }}</span>
+        <button class="btn-checkout" (click)="goToCheckout()">
+          Proceed to Checkout →
+        </button>
+      </div>
+    </div>
