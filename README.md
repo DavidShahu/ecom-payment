@@ -177,12 +177,8 @@ Backend updates local order status
 
 ## Test Card
 
-| Field | Value |
-|---|---|
-| Card Number | `4000 0000 0000 1091` |
-| CVV | Any 3 digits |
-| Expiry | Any date after 12/25 |
-| 3DS Code | `1234` |
+Test card credentials are provided separately by POK Pay as part of the technical challenge documentation.
+
 
 ---
 
