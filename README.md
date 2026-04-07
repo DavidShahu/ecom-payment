@@ -191,10 +191,43 @@ in diffrent browsers that prevents the payment flow to continue as predicted
 Gjat testimit jan hasur probleme me ambjetin test per checkout te (`pay-staging.pokpay.io`) 'WebSocket connection to 'wss://api-staging.pokpay.io/socket.io/' failed' 
 kjo eshte hasur ne browser te ndryshem dhe nuk eshte problem integrimi nga sistemi dhe pengon rrjedhen e konfirmit te pageses
 
+ ## Webhook Setup (Required for payment status updates)
 
-API authentication  --works
-Order creation  --works
-Redirect to hosted checkout  --works
-Order status tracking   --works 
-Webhook endpoint  --works
-Payment confirmation blocked by staging WebSocket issue  --doesnt work 
+POK Pay uses webhooks to notify your backend when a payment is completed.
+To receive webhooks locally you need [ngrok](https://ngrok.com/).
+
+### Steps:
+
+1. Download ngrok from [https://ngrok.com/download](https://ngrok.com/download)
+
+2. Create a free account at [https://dashboard.ngrok.com](https://dashboard.ngrok.com)
+
+3. Authenticate ngrok with your token:
+```bash
+ngrok config add-authtoken YOUR_TOKEN_HERE
+```
+
+4. Start ngrok (from the project root):
+```bash
+npm run tunnel
+```
+
+Or manually:
+```bash
+ngrok http 3000
+```
+
+5. Copy the HTTPS forwarding URL (e.g. `https://abc123.ngrok-free.dev`) and add it to `backend/.env`:
+WEBHOOK_BASE_URL=https://abc123.ngrok-free.dev
+
+6. Restart the backend after updating `.env`
+
+> **Note:** The free ngrok plan gives you a random URL each time unless you set up a static domain at [dashboard.ngrok.com/domains](https://dashboard.ngrok.com/domains). With a static domain you only need to set `WEBHOOK_BASE_URL` once.
+
+### How webhooks work
+
+When a customer completes payment on POK Pay's hosted checkout:
+1. POK Pay sends `POST /api/webhooks/payment` with `{ orderId }`
+2. Our backend fetches the latest order status from POK Pay
+3. The local order status is updated accordingly
+4. The order status page reflects the new status when refreshed

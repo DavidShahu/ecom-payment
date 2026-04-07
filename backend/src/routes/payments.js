@@ -16,7 +16,7 @@ router.post('/capture/:orderId', async (req, res, next) => {
       return res.status(400).json({ error: 'This order uses auto-capture' });
     }
 
-    const result = await pokpay.captureOrder(orderId);
+    const result = await pokpay.captureOrder(orderId, order.amount);
 
     order.status = 'CAPTURED';
     order.updatedAt = new Date().toISOString();
@@ -71,6 +71,8 @@ router.post('/refund/:orderId', async (req, res, next) => {
 
     const isPartial = amount != null && parseFloat(amount) < parseFloat(order.amount);
     order.status = isPartial ? 'PARTIALLY_REFUNDED' : 'REFUNDED';
+    order.refundedAmount = (order.refundedAmount || 0) + (amount ? parseFloat(amount) : parseFloat(order.amount));
+
     order.updatedAt = new Date().toISOString();
 
     res.json({ success: true, isPartial, data: result });

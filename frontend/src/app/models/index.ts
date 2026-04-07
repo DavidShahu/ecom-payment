@@ -44,4 +44,5 @@ export interface Order {
   createdAt: string;
   updatedAt?: string;
   pokData?: any;
+  refundedAmount? : number;
 }

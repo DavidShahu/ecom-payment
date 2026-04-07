@@ -11,7 +11,7 @@ let tokenExpiresAt = 0;
 
 async function getToken() {
   if (cachedToken && Date.now() < tokenExpiresAt) {
-    console.log(cachedToken)
+    //console.log(cachedToken)
     return cachedToken;
   } 
 
@@ -27,7 +27,7 @@ async function getToken() {
   tokenExpiresAt = Date.now() + 5 * 10 * 1000;
   //console.log(cachedToken)
 
-  console.log('Token refreshed');
+  //console.log('Token refreshed');
   return cachedToken;
 }
 
@@ -58,24 +58,29 @@ async function getOrder(sdkOrderId) {
   return response.data;
 }
 
-async function captureOrder(sdkOrderId) {
+async function captureOrder(sdkOrderId, amount) {
   const headers = await authHeader();
   const response = await axios.post(
     `${BASE_URL}/merchants/${MERCHANT_ID}/sdk-orders/${sdkOrderId}/capture`,
-    {},
+    { amount: String(amount) },
     { headers }
   );
+  //console.log(response)
   return response.data;
 }
 
 async function refundOrder(sdkOrderId, amount) {
   const headers = await authHeader();
-  const body = amount != null ? { amount: String(amount) } : {};
-  const response = await axios.post(
+  const body = amount != null ? { 
+    refundAmount: parseFloat(amount),
+    refundReason: 'Customer request'
+  } : {};
+    const response = await axios.post(
     `${BASE_URL}/merchants/${MERCHANT_ID}/sdk-orders/${sdkOrderId}/refund`,
     body,
     { headers }
   );
+  //console.log(response)
   return response.data;
 }
 

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { Product } from '../../models';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -25,8 +25,14 @@ export class ProductsComponent  {
     { id: 9, name: 'Samsung Galaxy S26 Ultra', description: 'Powered by GalaxyAI', price: 150000, emoji: '📱' },
   ];
 
-  constructor(public cartService: CartService, private router: Router) {}
-
+constructor(public cartService: CartService, private router: Router, private route: ActivatedRoute) {
+  // Handle redirect back from POK Pay
+  this.route.queryParams.subscribe(params => {
+    if (params['orderId']) {
+      this.router.navigate(['/orders', params['orderId']]);
+    }
+  });
+}
   addToCart(product: Product): void {
     this.cartService.addToCart(product);
   }

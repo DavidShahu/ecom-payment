@@ -20,13 +20,11 @@ router.post('/', async (req, res, next) => {
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: 'At least one item is required' });
     }
-
-    // Calculate total
+ 
     const total = items
       .reduce((sum, item) => sum + item.price * item.quantity, 0)
       .toFixed(2);
-
-    // Create order on POK Pay
+ 
     const pokResponse = await pokpay.createOrder({
       amount: total,
       currencyCode: currency,
@@ -36,18 +34,14 @@ router.post('/', async (req, res, next) => {
         quantity: item.quantity,
         price: item.price,
       })),
-
       ...(process.env.WEBHOOK_BASE_URL && {
         webhookUrl: `${process.env.WEBHOOK_BASE_URL}/api/webhooks/payment`
       }),
       redirectUrl: `${process.env.FRONTEND_URL}/orders`,
       failRedirectUrl: `${process.env.FRONTEND_URL}/orders`,
     });
-
     const pokOrder = pokResponse.data.sdkOrder;
-
-    console.log('[POK Pay] Order created:', JSON.stringify(pokOrder, null, 2));
-    // Save locally
+ 
     orders.set(pokOrder.id, {
       pokOrderId: pokOrder.id,
       autoCapture,
@@ -58,10 +52,9 @@ router.post('/', async (req, res, next) => {
       createdAt: new Date().toISOString(),
     });
 
-
     res.status(201).json({
       orderId: pokOrder.id,
-      checkoutUrl: pokOrder._self?.confirmUrl ?? null,      
+      checkoutUrl: pokOrder._self?.confirmUrl ?? null,
       amount: total,
       currency,
       autoCapture,
@@ -70,7 +63,6 @@ router.post('/', async (req, res, next) => {
     next(err);
   }
 });
-
 // ── GET /api/orders 
 // Get all orders
 router.get('/', (_req, res) => {
@@ -92,13 +84,31 @@ router.get('/:id', async (req, res, next) => {
       return res.status(404).json({ error: 'Order not found' });
     }
 
-    // Fetch latest status from POK Pay
     const pokResponse = await pokpay.getOrder(id);
+    const pokOrder = pokResponse.data.sdkOrder;
+
+     let derivedStatus = localOrder.status;
+     if (pokOrder.isRefunded) {
+       derivedStatus = 'REFUNDED';
+     } else if (pokOrder.isCanceled) {
+       derivedStatus = 'CANCELLED';
+     } else if (localOrder.status === 'PARTIALLY_REFUNDED') {
+       // Keep partial refund status 
+       derivedStatus = 'PARTIALLY_REFUNDED';
+     } else if (pokOrder.capturedAmount > 0) {
+       derivedStatus = 'CAPTURED';
+     } else if (pokOrder.canBeCaptured) {
+       derivedStatus = 'AUTHORIZED';
+     } else if (pokOrder.transactionId) {
+       derivedStatus = 'AUTHORIZED';
+     }
+ 
+    localOrder.status = derivedStatus;
 
     res.json({
       id,
       ...localOrder,
-      pokData: pokResponse.data,
+      pokData: pokOrder,
     });
   } catch (err) {
     next(err);

@@ -6,7 +6,7 @@
     "dev": "concurrently \"npm run backend\" \"npm run frontend\" \"npm run tunnel\"",
     "backend": "cd backend && node server.js",
     "frontend": "cd frontend && ng serve",
-    "tunnel": "ngrok http 3000"
+    "tunnel": "ngrok http --domain=vizierial-nontelephonically-genevive.ngrok-free.dev 3000"
   },
   "dependencies": {
     "concurrently": "^8.2.2"

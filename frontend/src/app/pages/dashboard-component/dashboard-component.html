@@ -25,13 +25,27 @@
         </div>
 
         <p class="order-id">ID: <code>{{ order.id }}</code></p>
+        <!-- <p class="order-meta-line">
+          {{ order.items.length }} item(s) ·
+          <span [class.text-green]="order.autoCapture" [class.text-orange]="!order.autoCapture">
+            Auto-Capture {{ order.autoCapture ? 'ON' : 'OFF' }}
+          </span>
+        </p> -->
         <p class="order-meta-line">
           {{ order.items.length }} item(s) ·
           <span [class.text-green]="order.autoCapture" [class.text-orange]="!order.autoCapture">
             Auto-Capture {{ order.autoCapture ? 'ON' : 'OFF' }}
           </span>
+          <span class="auto-captured-badge" *ngIf="order.autoCapture && order.status === 'CAPTURED'">
+            ·   Auto-captured
+          </span>
         </p>
         <p class="order-date">{{ order.createdAt | date:'short' }}</p>
+
+        <p class="order-meta-line" *ngIf="order.refundedAmount">
+          Refunded: <strong>ALL {{ order.refundedAmount }}</strong>
+          of ALL {{ order.amount }}
+        </p>
 
         <div class="card-actions">
 

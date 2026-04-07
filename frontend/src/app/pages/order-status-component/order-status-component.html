@@ -1,3 +1,5 @@
+
+
 <div class="page">
   <header class="site-header">
     <div class="header-inner">
@@ -8,7 +10,10 @@
   </header>
 
   <main class="container">
-    <div class="loading" *ngIf="loading()">Loading order…</div>
+    <div class="spinner" *ngIf="loading()">
+      <div class="spinner-circle"></div>
+      <span>Loading order...</span>
+    </div>
     <div class="error-box" *ngIf="error()">{{ error() }}</div>
 
     <div class="status-card" *ngIf="order()">
@@ -24,6 +29,15 @@
         <div class="meta-row">
           <span>Amount</span>
           <strong>ALL {{ order()!.amount }}</strong>
+        </div>
+        <div class="meta-row" *ngIf="order()!.refundedAmount">
+          <span>Refunded</span>
+          <strong style="color: #7c3aed">ALL {{ order()!.refundedAmount }}</strong>
+        </div>
+        
+        <div class="meta-row" *ngIf="order()!.refundedAmount">
+          <span>Remaining</span>
+          <strong>ALL {{ +order()!.amount - order()!.refundedAmount! }}</strong>
         </div>
         <div class="meta-row">
           <span>Auto-Capture</span>

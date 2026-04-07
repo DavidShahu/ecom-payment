@@ -6,6 +6,7 @@ const express = require('express');
 const router = express.Router();
 const pokpay = require('../services/pokpay.service');
 const { orders } = require('./orders');
+//const { localOrders: orders } = require('../store');
 
 // POST /api/webhooks/payment
 // POK Pay calls this when a payment event happens
@@ -19,7 +20,7 @@ router.post('/payment', async (req, res) => {
       return res.status(400).json({ error: 'orderId is required' });
     }
 
-    console.log(`[Webhook] Payment event received for order: ${orderId}`);
+    //console.log(`[Webhook] Payment event received for order: ${orderId}`);
 
     // Get the latest status from POK Pay
     const pokResponse = await pokpay.getOrder(orderId);
@@ -30,7 +31,7 @@ router.post('/payment', async (req, res) => {
     if (localOrder) {
       localOrder.status = pokOrder.status ?? localOrder.status;
       localOrder.updatedAt = new Date().toISOString();
-      console.log(`[Webhook] Order ${orderId} updated to: ${localOrder.status}`);
+      //console.log(`[Webhook] Order ${orderId} updated to: ${localOrder.status}`);
     }
 
     // If we return anything other than 200, POK Pay will keep retrying

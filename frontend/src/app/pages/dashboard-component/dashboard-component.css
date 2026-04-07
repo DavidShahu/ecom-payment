@@ -45,3 +45,4 @@ code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; }
 .text-orange { color: #c2410c; }
 .action-success { color: #16a34a; font-size: .85rem; margin-top: .4rem; }
 .action-error { color: #dc2626; font-size: .85rem; margin-top: .4rem; }
+.auto-captured-badge { color: #16a34a; font-size: .8rem; font-weight: 600; }
